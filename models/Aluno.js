@@ -1,36 +1,40 @@
 import conexao from '../config/conexao.js'
 
-const Admin = conexao.Schema({
+const Aluno = conexao.Schema({
     usuario: {
         type: conexao.Schema.Types.ObjectId,
         ref: 'Usuario',
         required: true,
         unique: true,
     },
-    cargo: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    matricula: {
+    cpf: {
         type: String,
         required: true,
         unique: true,
         trim: true,
     },
-    setor: {
+    telefone: {
         type: String,
-        default: 'Coordenação de Estágios',
+        required: true,
         trim: true,
     },
-    permissoes: [{
+    dataNascimento: {
+        type: Date,
+        required: true,
+    },
+    endereco: {
         type: String,
-        enum: ['usuarios', 'cursos', 'empresas', 'vagas', 'candidaturas', 'estagios'],
-    }],
+        required: true,
+        trim: true,
+    },
+    status: {
+        type: String,
+        enum: ['ativo', 'inativo', 'formado'],
+        default: 'ativo',
+        required: true,
+    },
 }, {
     timestamps: true,
-    
 });
 
-
-export default conexao.model('Admin',Admin)
+export default conexao.model('Aluno', Aluno)

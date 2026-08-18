@@ -3,11 +3,13 @@ import conexao from '../config/conexao.js'
 const Candidatura = conexao.Schema({
     status: {
         type: String,
-        enum: ['em análise', 'aprovado', 'rejeitado'],
+        enum: ['em análise', 'aprovado', 'recusado', 'cancelado'],
+        default: 'em análise',
         required: true,
     },
-    data: {
+    dataCandidatura: {
         type: Date,
+        default: Date.now,
         required: true,
     },
     aluno: {
@@ -20,6 +22,23 @@ const Candidatura = conexao.Schema({
         ref: 'Vaga',
         required: true,
     },
+    cartaApresentacao: {
+        type: String,
+        trim: true,
+        default: '',
+    },
+    observacaoEmpresa: {
+        type: String,
+        trim: true,
+        default: '',
+    },
+    dataResposta: {
+        type: Date,
+    },
+}, {
+    timestamps: true,
 });
+
+Candidatura.index({ aluno: 1, vaga: 1 }, { unique: true });
 
 export default conexao.model('Candidatura', Candidatura)
